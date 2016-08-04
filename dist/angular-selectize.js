@@ -60,7 +60,7 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
         if( !angular.equals(selectize.items, scope.ngModel) )
           scope.$evalAsync(function(){
             var value = angular.copy(selectize.items);
-            if (config.maxItems == 1) {
+            if (settings.maxItems == 1) {
               value = value[0]
             }
 
