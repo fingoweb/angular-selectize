@@ -56,17 +56,20 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
         }
       }
 
-      settings.onChange = function(value) {
-        var value = angular.copy(selectize.items);
-        if (settings.maxItems == 1) {
-          value = value[0]
-        }
-        modelCtrl.$setViewValue( value );
+      settings.onChange = function() {
+        if( !angular.equals(selectize.items, scope.ngModel) )
+          scope.$evalAsync(function(){
+            var value = angular.copy(selectize.items);
+            if (config.maxItems == 1) {
+              value = value[0]
+            }
 
-        if (scope.config.onChange) {
-          scope.config.onChange.apply(this, arguments);
-        }
-      };
+            if(modelCtrl.$viewValue != value) {
+              modelCtrl.$setViewValue( value );
+              scope.config.onChange(value);
+            }
+          });
+      }
 
       settings.onOptionAdd = function(value, data) {
         if( scope.options.indexOf(data) === -1 ) {
