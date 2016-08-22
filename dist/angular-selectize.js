@@ -81,6 +81,10 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
         }
       };
 
+      settings.updateLastValue = function(val){
+        scope.config.lastValue(val);
+      };
+
       settings.onInitialize = function() {
         selectize = element[0].selectize;
 
